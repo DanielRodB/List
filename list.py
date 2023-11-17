@@ -9,6 +9,35 @@ def getDetail(id):
         print(i["Nombre"])
     return " "+ str(id)
 
+def gameList():
+        print("Nombre")
+        a = input() 
+        print("Fecha de estreno: año, mes, día, ejemplo: 2020/05/25")
+        b = input()
+        releaseDate = datetime.strptime(b, "%Y/%m/%d") 
+        print("Clasificación")
+        c = input()
+        print("Precio")
+        d = float(input())
+        print("Online")
+        e = input()
+        juego={
+            "id": len(data) + 1,
+            "Nombre" : a,
+            "Fecha de estreno" : releaseDate,
+            "Clasificación" : c,
+            "Precio" : d,
+            "Online" : e
+        }
+        data.append(juego)
+def showLibrary(game):
+    for clave in game.keys():
+        print(clave + " : " + str(game[ clave]))
+
+def showLibraries():
+    for game in data:
+        showLibrary(game)
+
 while menu:
     print("Menú de libreria de juegos, presione la tecla correspondiente a lo que desea hacer")
     print("1) Agregar un nuevo juego")
@@ -21,50 +50,18 @@ while menu:
     q = int(q)
     print(type(q))
     
-    if q ==  1:
-        print("Nombre")
-        a = input("") 
-        data1 = a
-        print("Fecha de estreno: año, mes, día, ejemplo: 2020/05/25")
-        b = input()
-        releaseDate = datetime.strptime(b, "%Y/%m/%d") 
-        print("Clasificación")
-        c = input("")
-        data3 = c
-        print("Precio")
-        d = input("")
-        data4 = d
-        print("Online")
-        e = input("")
-        data5 = e
-        juego={
-            "id": len(data) + 1,
-            "Nombre" : a,
-            "Fecha de estreno" : releaseDate,
-            "Clasificación" : c,
-            "Precio" : d,
-            "Online" : e
-        }
-        data.append(juego)
-        print(data)
+    if q == 1:
+        gameList()
     elif q == 2:
-        print("lista de juegos con ID")
-        for gamelist in data :
-            print("Nombre del juego: " + gamelist["Nombre"])
-            print("El ID del juego es:" + str(gamelist["id"]))
-
+        showLibraries()
+       
     elif q == 3:
         print("Desplegar información de un juego en particular, escriba el ID")
-        information = int(input())
-        for showinfo in data:
-            if showinfo["id"] == information:
-                print("Nombre: " + showinfo["Nombre"])
-                print("Fecha de lanzamiento: " + showinfo["Fecha de estreno"].strftime('%d-%m-%Y'))
-                print("Id: " + str(showinfo["id"]))
-                print("Clasificación: " + showinfo["Clasificación"])
-                print("Precio: " + showinfo["Precio"])
-                print("Online: " + showinfo["Online"]) 
-                break
+        a = int(input())
+        for game in data:
+            if  game["id"] == a:
+                showLibrary(game)
+
     elif q == 4:
         print("Escriba el número ID del juego que desea eliminar de la librería")
         gameId = int(input())
@@ -80,6 +77,8 @@ while menu:
                     break
             indice += 1
             indice = indice + 1  
+
+
     elif q == 5:    
         menu= False
         print("vuelva pronto")
