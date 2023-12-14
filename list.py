@@ -15,8 +15,7 @@ class Game():
         self.name = name
         self.release = release 
         self.price = price
-        self.category = category
-        
+        self.category = category 
         self.online = online
         
     def toString(self):
@@ -65,18 +64,18 @@ class LibraryBase():
             print(game.toString())
 
     def validateFSG(self):    
-        userChoice = int(input(("Escriba el ID del juego que desea mostrar: ")))
+        user_choice = int(input(("Escriba el ID del juego que desea mostrar: ")))
         for game in self.storage:
-            if userChoice == game.id:
+            if user_choice == game.id:
                 print(game.gameDescription())
 
     def deleteG(self):
         gameID = int(input(("Escriba el ID del juego que desea eliminar: ")))
         indice = 0 
-        for deleteGame in self.storage:
-            if deleteGame.id == gameID:
+        for delete_game in self.storage:
+            if delete_game.id == gameID:
 
-                answer = input(("El juego que desea eliminar es: \n" + deleteGame.toString()))
+                answer = input(("El juego que desea eliminar es: \n" + delete_game.toString()))
                 if answer == "Si" or "si":
                     self.storage.pop(indice)
                     print("Se ha eliminado correctamente")
@@ -84,18 +83,27 @@ class LibraryBase():
             indice += 1
 
     def gameInDiscount(self):
-        for gameOffer in self.storage:
-            if gameOffer.price >= 260:
-                discount = gameOffer.price / 100 * 70
-                print ("Juegos con descuento del 30% " + gameOffer.toString() + " de: $" + str(gameOffer.price) + " a $" + str(discount) )
+        for game_offer in self.storage:
+            self.validateFSG()
+            discount = int(input(("Escriba el porcentaje de descuento que tiene el juego: ")))
+            final_price = game_offer.price / 100 * (100-discount) 
+            print("El juego pasó de: $" + str(game_offer.price) + " a: $" + str(final_price))
+            break
 
-    def gameDiffDate(self):
-        for diffDate in self.storage:
-            year = timedelta(days = 365)
-            classicDate = 2020* year
-            if  diffDate.release * 
-                print("El juego: " + diffDate.name + " es classic")
-
+    def gameDates(self):
+        show_date = int(input(("Seleccione el rango de fechas en el que desea mostrar los juegos \n 1)Últimos 3 meses \n 2)Últimos 6 meses \n 3)1 año \n ")))
+        if  show_date == 1: 
+            days_before = 90 
+        elif show_date == 2:
+            days_before = 180
+        elif show_date == 3:
+            days_before = 365
+        dateFS2 = datetime.now()
+        lastDate = dateFS2 - timedelta(days = days_before)
+        for compare_dates in self.storage:
+            dateFS = compare_dates.release 
+            if dateFS > lastDate:
+                print(" El título del juego es: " + compare_dates.name + " con ID: " + str(compare_dates.id) +" Fecha de estreno: "+ str(compare_dates.release))
 
 
 def showMEnu(): 
@@ -106,7 +114,7 @@ def showMEnu():
 3) Desplegar información de uno en específico
 4) Eliminar un juego
 5) Mostrar juegos con descuento
-6) Mostrar juegos clásicos
+6) Mostrar juegos con rango de fecha
 7) Salir del programa
           """)
     
@@ -129,6 +137,6 @@ while start:
     elif choice == 5:
         library.gameInDiscount()
     elif choice == 6:
-        library.gameDiffDate()
+        library.gameDates()
 
 
